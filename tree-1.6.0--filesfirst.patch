@@ -1,0 +1,183 @@
+diff -Naur tree-1.6.0-update-man-fr/doc/tree.1 tree-1.6.0--filesfirst/doc/tree.1
+--- tree-1.6.0-update-man-fr/doc/tree.1	2012-04-22 16:58:59.516305725 +0200
++++ tree-1.6.0--filesfirst/doc/tree.1	2012-04-22 13:13:06.526395940 +0200
+@@ -21,7 +21,7 @@
+ .SH NAME
+ tree \- list contents of directories in a tree-like format.
+ .SH SYNOPSIS
+-\fBtree\fP [\fB-acdfghilnpqrstuvxACDFQNSUX\fP] [\fB-L\fP \fIlevel\fP [\fB-R\fP]] [\fB-H\fP \fIbaseHREF\fP] [\fB-T\fP \fItitle\fP] [\fB-o\fP \fIfilename\fP] [\fB--nolinks\fP] [\fB-P\fP \fIpattern\fP] [\fB-I\fP \fIpattern\fP] [\fB--inodes\fP] [\fB--device\fP] [\fB--noreport\fP] [\fB--dirsfirst\fP] [\fB--version\fP] [\fB--help\fP] [\fB--filelimit\fP \fI#\fP] [\fB--si\fP] [\fB--prune\fP] [\fB--du\fP] [\fB--timefmt\fP \fIformat\fP] [\fIdirectory\fP ...]
++\fBtree\fP [\fB-acdfghilnpqrstuvxACDFQNSUX\fP] [\fB-L\fP \fIlevel\fP [\fB-R\fP]] [\fB-H\fP \fIbaseHREF\fP] [\fB-T\fP \fItitle\fP] [\fB-o\fP \fIfilename\fP] [\fB--nolinks\fP] [\fB-P\fP \fIpattern\fP] [\fB-I\fP \fIpattern\fP] [\fB--inodes\fP] [\fB--device\fP] [\fB--noreport\fP] [\fB--dirsfirst\fP] [\fB--filesfirst\fP] [\fB--version\fP] [\fB--help\fP] [\fB--filelimit\fP \fI#\fP] [\fB--si\fP] [\fB--prune\fP] [\fB--du\fP] [\fB--timefmt\fP \fIformat\fP] [\fIdirectory\fP ...]
+ .br
+ .SH DESCRIPTION
+ \fITree\fP is a recursive directory listing program that produces a depth
+@@ -217,13 +217,18 @@
+ .PP
+ .TP
+ .B -U
+-Do not sort.  Lists files in directory order. Disables \fB--dirsfirst\fP.
++Do not sort.  Lists files in directory order. Disables \fB--dirsfirst\fP and \fB--filesfirst\fP.
+ .PP
+ .TP
+ .B --dirsfirst
+ List directories before files. This is a meta-sort that alters the above sorts.
+ This option is disabled when \fB-U\fP is used.
+ .PP
++.TP
++.B --filesfirst
++List files before directories. This is a meta-sort that alters the above sorts.
++This option is disabled when \fB-U\fP is used.
++.PP
+ 
+ .SH GRAPHICS OPTIONS
+ 
+diff -Naur tree-1.6.0-update-man-fr/doc/tree.1.fr tree-1.6.0--filesfirst/doc/tree.1.fr
+--- tree-1.6.0-update-man-fr/doc/tree.1.fr	2012-04-22 16:56:18.243306150 +0200
++++ tree-1.6.0--filesfirst/doc/tree.1.fr	2012-04-22 17:02:39.513389754 +0200
+@@ -21,7 +21,7 @@
+ .SH NOM
+ tree \- liste le contenu de répertoires sous forme d'arborescence
+ .SH SYNOPSIS
+-\fBtree\fP [\fB-acdfghilnpqrstuvxACDFQNSUX\fP] [\fB-L\fP \fIniveau\fP [\fB-R\fP]] [\fB-H\fP \fIbaseHREF\fP] [\fB-T\fP \fItitre\fP] [\fB-o\fP \fIfichier\fP] [\fB--nolinks\fP] [\fB-P\fP \fImotif\fP] [\fB-I\fP \fImotif\fP] [\fB--inodes\fP] [\fB--device\fP] [\fB--noreport\fP] [\fB--dirsfirst\fP] [\fB--version\fP] [\fB--help\fP] [\fB--filelimit\fP \fI#\fP] [\fB--si\fP] [\fB--prune\fP] [\fB--du\fP] [\fB--timefmt\fP \fIformat\fP] [\fB--charset\fP \fIcharset\fP] [\fIrépertoire\fP ...]
++\fBtree\fP [\fB-acdfghilnpqrstuvxACDFQNSUX\fP] [\fB-L\fP \fIniveau\fP [\fB-R\fP]] [\fB-H\fP \fIbaseHREF\fP] [\fB-T\fP \fItitre\fP] [\fB-o\fP \fIfichier\fP] [\fB--nolinks\fP] [\fB-P\fP \fImotif\fP] [\fB-I\fP \fImotif\fP] [\fB--inodes\fP] [\fB--device\fP] [\fB--noreport\fP] [\fB--dirsfirst\fP] [\fB--filesfirst\fP] [\fB--version\fP] [\fB--help\fP] [\fB--filelimit\fP \fI#\fP] [\fB--si\fP] [\fB--prune\fP] [\fB--du\fP] [\fB--timefmt\fP \fIformat\fP] [\fB--charset\fP \fIcharset\fP] [\fIrépertoire\fP ...]
+ .br
+ .SH DESCRIPTION
+ \fITree\fP est un programme de listage récursif de répertoires qui produit
+@@ -239,7 +239,7 @@
+ .TP
+ .B -U
+ Ne pas trier.  Affiche les fichier par ordre d'apparition du répertoire.
+-Cette option désactive \fB--dirsfirst\fP.
++Cette option désactive \fB--dirsfirst\fP et \fB--filesfirst\fP.
+ .PP
+ .TP
+ .B --dirsfirst
+@@ -247,6 +247,12 @@
+ les tris cités plus haut.
+ Cette option est désactivée avec \fB-U\fP.
+ .PP
++.TP
++.B --filesfirst
++Affiche les fichiers avant les répertoires. Ceci est un méta-tri qui modifie
++les tris cités plus haut.
++Cette option est désactivée avec \fB-U\fP.
++.PP
+ 
+ 
+ .SH OPTIONS GRAPHIQUES
+diff -Naur tree-1.6.0-update-man-fr/tree.c tree-1.6.0--filesfirst/tree.c
+--- tree-1.6.0-update-man-fr/tree.c	2011-06-24 16:26:30.000000000 +0200
++++ tree-1.6.0--filesfirst/tree.c	2012-04-22 13:19:26.201307466 +0200
+@@ -28,7 +28,8 @@
+ bool dflag, lflag, pflag, sflag, Fflag, aflag, fflag, uflag, gflag;
+ bool qflag, Nflag, Qflag, Dflag, inodeflag, devflag, hflag, Rflag;
+ bool Hflag, siflag, cflag, Xflag, duflag, pruneflag;
+-bool noindent, force_color, nocolor, xdev, noreport, nolinks, flimit, dirsfirst, nosort;
++bool noindent, force_color, nocolor, xdev, noreport, nolinks, flimit, nosort;
++int somefirst;
+ char *pattern = NULL, *ipattern = NULL, *host = NULL, *title = "Directory Tree", *sp = " ";
+ char *timefmt = NULL;
+ const char *charset = NULL;
+@@ -80,7 +81,8 @@
+   aflag = dflag = fflag = lflag = pflag = sflag = Fflag = uflag = gflag = FALSE;
+   Dflag = qflag = Nflag = Qflag = Rflag = hflag = Hflag = siflag = cflag = FALSE;
+   noindent = force_color = nocolor = xdev = noreport = nolinks = FALSE;
+-  dirsfirst = nosort = inodeflag = devflag = Xflag = FALSE;
++  nosort = inodeflag = devflag = Xflag = FALSE;
++  somefirst = 0;
+   duflag = pruneflag = FALSE;
+   flimit = 0;
+   dirs = xmalloc(sizeof(int) * (maxdirs=4096));
+@@ -275,7 +277,12 @@
+ 	    }
+ 	    if (!strcmp("--dirsfirst",argv[i])) {
+ 	      j = strlen(argv[i])-1;
+-	      dirsfirst = TRUE;
++	      somefirst = 1;
++	      break;
++	    }
++	    if (!strcmp("--filesfirst",argv[i])) {
++	      j = strlen(argv[i])-1;
++	      somefirst = -1;
+ 	      break;
+ 	    }
+ 	    if (!strncmp("--filelimit",argv[i],11)) {
+@@ -516,7 +523,7 @@
+   fprintf(stderr,
+ 	"usage: tree [-acdfghilnpqrstuvxACDFQNSUX] [-H baseHREF] [-T title ] [-L level [-R]]\n"
+ 	"\t[-P pattern] [-I pattern] [-o filename] [--version] [--help] [--inodes]\n"
+-	"\t[--device] [--noreport] [--nolinks] [--dirsfirst] [--charset charset]\n"
++	"\t[--device] [--noreport] [--nolinks] [--dirsfirst] [--filesfirst] [--charset charset]\n"
+ 	"\t[--filelimit[=]#] [--si] [--timefmt[=]<f>] [<directory list>]\n");
+   if (n < 2) exit(0);
+   fprintf(stderr,
+@@ -556,6 +563,7 @@
+ 	"  -c            Sort files by last status change time.\n"
+ 	"  -U            Leave files unsorted.\n"
+ 	"  --dirsfirst   List directories before files (-U disables).\n"
++	"  --filesfirst  List files before directories (-U disables).\n"
+ 	"  ------- Graphics options ------\n"
+ 	"  -i            Don't print indentation lines.\n"
+ 	"  -A            Print ANSI lines graphic indentation lines.\n"
+@@ -769,39 +777,39 @@
+ /* Sorting functions */
+ int alnumsort(struct _info **a, struct _info **b)
+ {
+-  if (dirsfirst) {
++  if (somefirst) {
+     if ((*a)->isdir == (*b)->isdir) return strcoll((*a)->name,(*b)->name);
+-    else return (*a)->isdir ? -1 : 1;
++    else return ((*a)->isdir ? -1 : 1) * somefirst;
+   }
+   return strcoll((*a)->name,(*b)->name);
+ }
+ 
+ int versort(struct _info **a, struct _info **b)
+ {
+-  if (dirsfirst) {
++  if (somefirst) {
+     if ((*a)->isdir == (*b)->isdir) return strverscmp((*a)->name,(*b)->name);
+-    else return (*a)->isdir ? -1 : 1;
++    else return ((*a)->isdir ? -1 : 1) * somefirst;
+   }
+   return strverscmp((*a)->name,(*b)->name);
+ }
+ 
+ int reversealnumsort(struct _info **a, struct _info **b)
+ {
+-  if (dirsfirst) {
++  if (somefirst) {
+     if ((*a)->isdir == (*b)->isdir) return strcoll((*b)->name,(*a)->name);
+-    else return (*a)->isdir ? -1 : 1;
++    else return ((*a)->isdir ? -1 : 1) * somefirst;
+   }
+   return strcoll((*b)->name,(*a)->name);
+ }
+ 
+ int mtimesort(struct _info **a, struct _info **b)
+ {
+-  if (dirsfirst) {
++  if (somefirst) {
+     if ((*a)->isdir == (*b)->isdir) {
+       if ((*a)->mtime == (*b)->mtime) return strcoll((*a)->name,(*b)->name);
+       return (*a)->mtime < (*b)->mtime;
+     }
+-    else return (*a)->isdir ? -1 : 1;
++    else return ((*a)->isdir ? -1 : 1) * somefirst;
+   }
+   if ((*a)->mtime == (*b)->mtime) return strcoll((*a)->name,(*b)->name);
+   return (*a)->mtime < (*b)->mtime;
+@@ -809,12 +817,12 @@
+ 
+ int ctimesort(struct _info **a, struct _info **b)
+ {
+-  if (dirsfirst) {
++  if (somefirst) {
+     if ((*a)->isdir == (*b)->isdir) {
+       if ((*a)->ctime == (*b)->ctime) return strcoll((*a)->name,(*b)->name);
+       return (*a)->ctime < (*b)->ctime;
+     }
+-    else return (*a)->isdir ? -1 : 1;
++    else return ((*a)->isdir ? -1 : 1) * somefirst;
+   }
+   if ((*a)->ctime == (*b)->ctime) return strcoll((*a)->name,(*b)->name);
+   return (*a)->ctime < (*b)->ctime;

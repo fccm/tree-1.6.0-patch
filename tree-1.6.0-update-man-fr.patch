@@ -1,0 +1,456 @@
+diff -Naur tree-1.6.0/doc/tree.1.fr tree-1.6.0-update-man-fr/doc/tree.1.fr
+--- tree-1.6.0/doc/tree.1.fr	2005-03-31 15:30:31.000000000 +0200
++++ tree-1.6.0-update-man-fr/doc/tree.1.fr	2012-04-22 16:56:18.243306150 +0200
+@@ -1,18 +1,27 @@
+ .\" $Copyright: $
+-.\" Copyright (c) 1996 - 2001 by Steve Baker
++.\" Copyright (c) 1996 - 2011 by Steve Baker
+ .\" All Rights reserved
+ .\"
+-.\" This software is provided as is without any express or implied
+-.\" warranties, including, without limitation, the implied warranties
+-.\" of merchantability and fitness for a particular purpose.
++.\" This program is free software; you can redistribute it and/or modify
++.\" it under the terms of the GNU General Public License as published by
++.\" the Free Software Foundation; either version 2 of the License, or
++.\" (at your option) any later version.
++.\"
++.\" This program is distributed in the hope that it will be useful,
++.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
++.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++.\" GNU General Public License for more details.
++.\"
++.\" You should have received a copy of the GNU General Public License
++.\" along with this program; if not, write to the Free Software
++.\" Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ .\"
+ ...
+-.V= $Header: tree.1 1.4 1996 - 2001 $
+-.TH TREE 1 "\*(V)" "Manuel du Programmeur UNIX"
++.TH TREE 1 "\*(V)" "Tree 1.6.0"
+ .SH NOM
+ tree \- liste le contenu de répertoires sous forme d'arborescence
+ .SH SYNOPSIS
+-\fBtree\fP [ \fB-adfgilnopqstuxACDFNS\fP ] [ \fB-L\fP \fIniveau\fP [ \fB-R\fP ]] [ \fB-H\fP \fIbaseHREF\fP ] [ \fB-P\fP \fImotif\fP ] [ \fB-I\fP \fImotif\fP ] [ \fIrepertoire\fP ... ]
++\fBtree\fP [\fB-acdfghilnpqrstuvxACDFQNSUX\fP] [\fB-L\fP \fIniveau\fP [\fB-R\fP]] [\fB-H\fP \fIbaseHREF\fP] [\fB-T\fP \fItitre\fP] [\fB-o\fP \fIfichier\fP] [\fB--nolinks\fP] [\fB-P\fP \fImotif\fP] [\fB-I\fP \fImotif\fP] [\fB--inodes\fP] [\fB--device\fP] [\fB--noreport\fP] [\fB--dirsfirst\fP] [\fB--version\fP] [\fB--help\fP] [\fB--filelimit\fP \fI#\fP] [\fB--si\fP] [\fB--prune\fP] [\fB--du\fP] [\fB--timefmt\fP \fIformat\fP] [\fB--charset\fP \fIcharset\fP] [\fIrépertoire\fP ...]
+ .br
+ .SH DESCRIPTION
+ \fITree\fP est un programme de listage récursif de répertoires qui produit
+@@ -42,32 +51,8 @@
+ .SH OPTIONS
+ \fITree\fP comprend les commutateurs suivants en ligne de commande\ :
+ 
+-.TP
+-.B --help
+-Donne en sortie un listage verbeux des options d'utilisation
+-.PP
+-.TP
+-.B --version
+-Sort la version de tree
+-.PP
+-.TP
+-.B --inodes
+-Affiche le numéro d'inode du fichier ou du répertoire
+-.PP
+-.TP
+-.B --device
+-Affiche le numéro de périphérique auquel le fichier ou le répertoire
+-appartient 
+-.PP
+-.TP
+-.B --noreport
+-Omet d'afficher le compte des fichiers et répertoires à la fin du listage
+-arborescent 
+-.PP
+-.TP
+-.B --nolinks
+-Désactive les hyperliens en sortie HTML
+-.PP
++.SH OPTIONS DE PARCOURS
++
+ .TP
+ .B -a
+ Tous les fichiers sont affichés. Par défaut tree n'affiche pas les fichiers
+@@ -77,22 +62,17 @@
+ .PP
+ .TP
+ .B -d
+-Liste uniquement les répertoires
+-.PP
+-.TP
+-.B -f
+-Affiche le chemin complet en préfixe de chaque fichier
+-.PP
+-.TP
+-.B -i
+-Fait que tree n'affiche pas les lignes d'indentation, ce qui est utile en
+-conjonction avec l'option \fB-f\fP
++Liste uniquement les répertoires.
+ .PP
+ .TP
+ .B -l
+ Suit les liens symboliques s'ils pointent sur des répertoires, comme
+ s'ils étaient des répertoires. Les liens symboliques qui finiraient de
+-façon récursive sont évités, une fois détectés
++façon récursive sont évités, une fois détectés.
++.PP
++.TP
++.B -f
++Affiche le chemin complet en préfixe de chaque fichier.
+ .PP
+ .TP
+ .B -x
+@@ -100,96 +80,210 @@
+ \fBfind \fI-xdev\fP
+ .PP
+ .TP
++.B -L \fIniveau\fP
++Profondeur d'affichage maximum de l'arborescence des répertoires.
++.PP
++.TP
++.B -R
++Descendre récursivement dans l'arborescence de chaque niveau de répertoires  
++(voir l'option \fB-L\fP), et pour chacun d'eux exécuter de nouveau
++\fBtree\fP en y ajoutant `-o 00Tree.html' comme nouvelle option.
++.PP
++.TP
+ \fB-P \fImotif\fP
+ Liste exclusivement les fichiers correspondant au joker
+ \fImotif\fP. Remarque\ : vous devez utiliser l'option \fI-a\fP pour prendre 
+ également en considération les fichiers commençant par un point `.'. Les
+ opérateurs de joker valides sont `*' (zéro caractère ou plus), `?'
+-(n'importe quel caractère), `[...]' (n'importe quel caractère parmi ceux
+-qui sont listés entre crochets (un tiret `-' optionnel peut être utilisé
++(un seul caractère, n'importe quel), `[...]' (n'importe quel caractère parmi
++ceux qui sont listés entre crochets (un tiret `-' optionnel peut être utilisé
+ pour une plage de caractères\ ; par exemple\ : [A-Z])), et `[^...]'
+ (n'importe quel caractère à l'exclusion de ceux qui sont listés entre
+-crochets). 
++crochets) et `|' sépare plusieurs motifs possible.
+ .PP
+ .TP
+ .B -I \fImotif\fP
+-Ne pas lister les fichiers correspondant au joker \fImotif\fP
++Ne pas lister les fichiers correspondant au joker \fImotif\fP.
+ .PP
+ .TP
+-.B -p
+-Afficher les protections pour chaque fichier (comme avec ls -l)
++.B --prune
++Supprime les répertoires vides de l'affichage. Utile pour une utilisation
++conjointe avec les options \fB-P\fP ou \fB-I\fP.
++Voir \fBBOGUES ET REMARQUES\fP plus bas pour plus d'information sur cette
++option.
++.PP
++.TP
++.B --noreport
++Omet d'afficher le compte des fichiers et répertoires à la fin du listage
++arborescent.
++.PP
++.TP
++.B --charset \fIcharset\fP
++Sélectionne le jeu de caractères à utiliser pour la sortie HTML et pour
++l'affichage des lignes.
++.PP
++.TP
++.B --filelimit \fI#\fP
++Ne pas descendre les répertoires qui contiennent plus que \fI#\fP entrées.
++.PP
++.TP
++.B --timefmt \fIformat\fP
++Affiche (implique -D) et formate la date selon la chaîne de charactère en
++utilisant la syntaxe \fBstrftime\fP(3).
+ .PP
+ .TP
+ .B -o \fInom-de-fichier\fP
+-Envoie la sortie vers \fInom-de-fichier\fP
++Envoie la sortie vers \fInom-de-fichier\fP.
+ .PP
++
++
++.SH OPTIONS D'AFFICHAGE DES FICHERS
++
+ .TP
+-.B -s
+-Affiche la taille de chaque fichier devant son nom
++.B -q
++Affiche les caractères non affichables dans les noms de fichiers sous forme
++de points d'interrogation au lieu de la notation carret par défaut.
++.PP
++.TP
++.B -N
++Affiche les caractères non affichables tels quels au lieu de la notation
++carret par défaut.
++.PP
++.TP
++.B -Q
++Cite les noms de fichier entre guillemets doubles.
++.PP
++.TP
++.B -p
++Afficher le type et les droits pour chaque fichier (comme avec ls -l).
+ .PP
+ .TP
+ .B -u
+ Affiche le nom d'utilisateur du fichier, ou le numéro d'UID si aucun nom
+-d'utilisateur n'est disponible 
++d'utilisateur n'est disponible.
+ .PP
+ .TP
+ .B -g
+ Affiche le nom de groupe du fichier, ou le numéro de GID si aucun nom de
+-groupe n'est disponible 
++groupe n'est disponible.
++.PP
++.TP
++.B -s
++Affiche la taille de chaque fichier devant son nom.
++.PP
++.TP
++.B -h
++Affiche la taille de chaque fichier dans un format plus lisible pour un humain,
++en ajoutant un lettre représentant l'ordre de grandeur\ :
++K (kilobytes), M (megabytes), G (gigabytes), T (terabytes), P (petabytes) et
++E (exabytes).
++.PP
++.TP
++.B --si
++Comme \fB-h\fP mais utilise les unités SI, puissance de 1000 au lien de 1024.
++.PP
++.TP
++.B --du
++Pour chaque répertoire indique la taille correspondant à la somme de la taille
++de tous les fichiers qu'il contient, ainsi que les fichiers contenus dans ses
++sous-répertoires.  La taille totale est également donnée dans le compte rendu
++final (similaire à la commande 'du -c'). Cette option nécessite de lire
++l'arborescence complète avant de pouvoir réaliser l'affichage, voir
++\fBBOGUES ET REMARQUES\fP plus bas.
++Implique \fB-s\fP.
+ .PP
+ .TP
+ .B -D
+-Affiche la date et l'heure de dernière modification du fichier
++Affiche la date et l'heure de dernière modification du fichier, ou si
++\fB-c\fP est utilisé, la date de dernier changement de statut.
+ .PP
+ .TP
+ .B -F
+ Appose un `/' pour les répertoires, un `=' pour les fichiers de socket, un
+-`*' pour les fichiers exécutables et un `|' pour les FIFO, comme avec ls\ -F 
++`*' pour les fichiers exécutables et un `|' pour les FIFO, comme avec la
++commande 'ls\ -F'.
+ .PP
+ .TP
+-.B -q
+-Affiche les caractères non affichables dans les noms de fichiers sous forme
+-de points d'interrogation au lieu de la notation carret par défaut 
++.B --inodes
++Affiche le numéro d'inode du fichier ou du répertoire.
+ .PP
+ .TP
+-.B -N
+-Affiche les caractères non affichables tels quels au lieu de la notation
+-carret par défaut
++.B --device
++Affiche le numéro de périphérique auquel le fichier ou le répertoire
++appartient.
++.PP
++
++
++.SH OPTIONS DE TRI
++
++.TP
++.B -v
++Trie la sortie par version.
++.PP
++.TP
++.B -r
++Trie la sortie par ordre alphabétique inverse.
+ .PP
+ .TP
+ .B -t
+-Trie la sortie par horaire de dernière modification, au lieu de trier
+-alphabétiquement 
++Trie la sortie par date de dernière modification, au lieu de trier
++alphabétiquement.
+ .PP
+ .TP
+-.B -n
+-Désactive toujours la mise en couleurs, forcée par l'option \fB-C\fP
++.B -c
++Trie la sortie par date de dernier changement de statut au lieu d'un tri
++alphabétique.  Modifie le comportement de l'option \fB-D\fP (si utilisée)
++pour afficher la date de dernier changement de statut au lieu de la date
++de dernière modification.
+ .PP
+ .TP
+-.B -C
+-Active toujours la mise en couleurs, au moyen des couleurs intégrées par
+-défaut si la variable d'environnement LS_COLORS n'est pas activée. Utile
+-pour mettre en couleurs la sortie vers un tube.
++.B -U
++Ne pas trier.  Affiche les fichier par ordre d'apparition du répertoire.
++Cette option désactive \fB--dirsfirst\fP.
++.PP
++.TP
++.B --dirsfirst
++Affiche les répertoires avant les fichiers. Ceci est un méta-tri qui modifie
++les tris cités plus haut.
++Cette option est désactivée avec \fB-U\fP.
++.PP
++
++
++.SH OPTIONS GRAPHIQUES
++
++.TP
++.B -i
++Ne pas afficher les lignes d'indentation, ce qui est utile en conjonction
++avec l'option \fB-f\fP.
+ .PP
+ .TP
+ .B -A
+ Active le graphisme ANSI de lignes pour l'affichage des lignes
+-d'indentation 
++d'indentation.
+ .PP
+ .TP
+ .B -S
+ Active le graphisme ASCII de lignes (utile pour utiliser les polices du
+-mode console de Linux)
++mode console de Linux).
+ .PP
+ .TP
+-.B -L \fIniveau\fP
+-Maximum de profondeur d'affichage de l'arborescence des répertoires
++.B -n
++Désactive toujours la mise en couleurs, forcée par l'option \fB-C\fP.
+ .PP
+ .TP
+-.B -R
+-Descendre récursivement dans l'arborescence de chaque niveau de répertoires  
+-(voir l'option \fB-L\fP), et pour chacun d'eux exécuter de nouveau
+-\fBtree\fP en y ajoutant `-o 00Tree.html' comme nouvelle option.
++.B -C
++Active toujours la mise en couleurs, au moyen des couleurs intégrées par
++défaut si la variable d'environnement LS_COLORS n'est pas activée. Utile
++pour mettre en couleurs la sortie vers un tube.
++.PP
++
++
++.SH OPTIONS XML/HTML
++
++.TP
++.B -X
++Active la sortie en XML. Affiche l'arborescence sous forme d'un fichier
++au format XML.
+ .PP
+ .TP
+ .B -H \fIbaseHREF\fP
+@@ -204,32 +298,95 @@
+ de style CSS, utilisez l'option -C en plus de cette option pour forcer la
+ sortie en couleurs.
+ .PP
++.TP
++.B -T \fItitre\fP
++Indique le titre à utiliser pour la page et l'entête H1 de la sortie HTML.
++.PP
++.TP
++.B --nolinks
++Désactive les hyperliens en sortie HTML.
++.PP
++
++
++.SH OPTIONS DIVERSES
++
++.TP
++.B --help
++Affiche la liste des options de la ligne de commande.
++.PP
++.TP
++.B --version
++Indique la version de tree.
++.PP
++
+ .br
++
+ .SH FICHIERS
+-/etc/DIR_COLORS		Base de données des couleurs système
++/etc/DIR_COLORS		Base de données des couleurs système.
+ .br
+-~/.dircolors		Base de données des couleurs utilisateur
++~/.dircolors		Base de données des couleurs utilisateur.
+ .br
+ 
+ .SH ENVIRONNEMENT
+-\fBLS_COLORS\fP		Informations sur les couleurs créées par dircolors
++\fBLS_COLORS\fP		Informations sur les couleurs créées par dircolors.
++.br
++\fBTREE_COLORS\fP	Utiliser cette variable pour les couleurs à la
++place de LS_COLORS si elle est définie.
++.br
++\fBTREE_CHARSET\fP	Jeu de caractères à utiliser pour la sortie HTML.
++.br
++\fBLC_CTYPE\fP		Localisation pour la sortie des nom de fichier.
++.br
++\fBLC_TIME\fP		Localisation pour timefmt, voir \fBstrftime\fP(3).
++.br
++\fBTZ\fP		Fuseau horaire pour la sortie de timefmt, voir \fBstrftime\fP(3).
+ 
+-.SH AUTEUR
++
++.SH AUTEURS
+ Steve Baker (ice@mama.indstate.edu)
+ .br
+ La sortie HTML a été hackée par Francesc Rocher (rocher@econ.udg.es)
++.br
++Jeu de caractères et support OS/2 par Kyosuke Tokoro (NBG01720@nifty.ne.jp)
++
++
++.SH BOGUES ET REMARQUES
++Tree ne supprime pas les répertoires qui deviennent vide en apparence du à
++l'utilisation des options -P et -I.  Utiliser l'option --prune.
++
++Les options -h et --si arrondissent au plus près contrairement à la commande
++ls qui arrondit toujours à la valeur supérieure.
++
++Lister les fichiers et les répertoires avec les options -I, -P et --filelimit
++conduit à un rapport incorrect du nombre de fichier et de répertoire.
++
++Les options --prune et --du causent une accumulation complète de l'arborescence
++en mémoire avant de réaliser la sortie.  Pour les très grandes arborescences
++cela peut causer un délai significatif avant la sortie, ainsi que l'utilisation
++d'une quantité importante de mémoire.
++
++Le tampon mémoire de timefmt a une taille ridiculement grande de 255 caractères.
++Les chaînes de caractère pour la date plus grande auront un comportement non
++définit, mais sont garanties de ne pas excéder 255 caractères.
++
++La sortie XML n'est pas colorée, ce qui est une honte.
++
++Il y en a surement d'autres.
+ 
+-.SH BOGUES
+-Aucun bogue connu. N'a pas été testé en profondeur. Pourrait utiliser
+-quelques options supplémentaires, à la manière de ls. 
+ 
+ .SH VOIR AUSSI
+-.BR dircolors (1L),
+-.BR ls (1L),
+-.BR find (1L)
++.BR dircolors (1),
++.BR ls (1),
++.BR find (1),
++.BR du (1),
++.BR strftime (3)
+ 
+-.SH TRADUCTEUR
++.SH TRADUCTEURS
+ Baptiste Mélès <baptiste.meles@ens.fr>
++.br
++Florent Monnier <fmonnie\
++r@linux-nantes.org>
++(mise à jour de la version 1.4 vers 1.6)
+ 
+-N'hésitez pas à reporter respectivement à l'auteur ou au traducteur toute
++N'hésitez pas à reporter respectivement à l'auteur ou aux traducteurs toute
+ erreur ou omission dans cette page de manuel.
